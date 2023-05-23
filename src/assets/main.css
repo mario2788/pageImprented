@@ -1,0 +1,47 @@
+@import './base.css';
+
+#app {  
+    width: 21.59cm ;
+    max-width: 21.59cm ;
+    padding: 0.5rem;
+    font-weight: normal;
+    background: rgb(255, 255, 255);
+}
+
+
+@media print {
+    
+    #app {
+        width: 21.59cm ;
+        max-width: 21.59cm ;
+        print-color-adjust: exact; 
+        padding: 0;
+    }
+
+    @page {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+
+        padding-inline: 0;
+        padding-top: 0.5rem;
+        /* size: auto; */
+        size: A4;
+        
+        
+        @bottom-center {
+            content: "Página " counter(page) " de " counter(pages);
+        }
+    }
+    
+    section {
+        page-break-after: always;
+      }
+
+    body {
+        padding-block: 5px;
+        padding-inline: 5px ;
+    }
+}
+
