@@ -2,11 +2,13 @@
 
      import { RouterLink, RouterView } from 'vue-router' 
 
+     console.clear()
+
 </script>
 
 <template >
 
-     <div class="container">
+     <div class="globalContainer">
 
           <RouterView/>
            
@@ -18,9 +20,8 @@
 
 <style scope>
 
-     .container{
-          padding-inline: 0.8rem;
-          padding-block: 1rem;
+     .globalContainer{
+          padding: 0rem;
      }
 
 </style>

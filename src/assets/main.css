@@ -5,9 +5,8 @@
     max-width: 21.59cm ;
     padding: 0.5rem;
     font-weight: normal;
-    background: rgb(255, 255, 255);
+    background: black
 }
-
 
 @media print {
     
@@ -16,6 +15,7 @@
         max-width: 21.59cm ;
         print-color-adjust: exact; 
         padding: 0;
+        background: white
     }
 
     @page {
@@ -26,18 +26,18 @@
 
         padding-inline: 0;
         padding-top: 0.5rem;
-        /* size: auto; */
-        size: A4;
+        size: auto;
+        /* size: 29cm */
         
         
-        @bottom-center {
+        /* @bottom-center {
             content: "Página " counter(page) " de " counter(pages);
-        }
+        } */
     }
     
-    section {
+    /* section {
         page-break-after: always;
-      }
+    } */
 
     body {
         padding-block: 5px;

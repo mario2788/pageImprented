@@ -1,77 +1,109 @@
 <script setup>
+     // Vue
+     import {  onMounted } from 'vue'
      
+     // Store
      import { useCounterStore } from '@/stores/counter' 
+     import { usePageStore }  from '@/stores/pages'
+
+     // Elements/Components
      import Page from '@/components/Page.vue';
-     import PersonalInformation  from '@/views/PersonalInformation.vue';
+     import Square  from '@/components/Square.vue' ;
+     import Head from '@/helpers/Head.vue' ;
+
+     // Data
+     import { dataPageHome } from '@/serverRequest/dataPageHome.js'
+
+
+     const objectsData = dataPageHome()
+
+     console.log(objectsData)
 
      const counter = useCounterStore()
-     counter.increment()
+     const thisCounter = counter.count + 1
+     counter.increment( objectsData.length -1 )
 
-     const [date, month, day, year, hour] = new Date().toString().split(' ') 
-     const array = [...Array(15)].map( (_,idx) => ("Texto") ) 
+     const { pageList , addPage } = usePageStore();
 
-     console.log( counter.count );
+     addPage({
+          id: 'personal',
+          desborda: false,
+     })
+  
+
+
+     onMounted( () => {
+          // console.log( "Montado PageHome", pageList.filter( obj => obj.id === 'personal' ) );
+          const objPage = pageList.filter( obj => obj.id === 'personal' )[0]
+
+          if( objPage.desborda ){
+               for( let obj in state ){
+                    if( state[obj].flag === false ){
+                         
+                         if( state[obj].num <= 2 ){
+                              state[obj].flag = true
+                         }else{
+                              state[obj].num = state[obj].num - 1
+                         }
+
+                         console.log("Dentro", obj, state[obj] );
+                    }
+               }
+               console.log( Object.keys(state) );
+          }
+     })
 
 </script>
 
 
 <template>
-     <Page  page="1" :pages="counter.count" >
+
+     <Page 
+          v-for="(array,idx) in objectsData"
+          id="personal" 
+          :page="thisCounter + idx" 
+          :pages="counter.count" 
+     >
 
           <template v-slot:header>
-
-               <hr width=100% align="center" size=5 noshade="noshade" color="#00" />
-
-               <div class="header">
-                    <img src="../assets/images/logoHospital.jpeg" alt="El salvador" style="scale:65%" />
-
-                    <img src="../assets/images/cropped-g52 1.png" alt="Waves-ai" style="scale:82%; margin-left:0rem" />
+               <div v-if="idx===0">
+                   <Head/>
                </div>
-
-               <hr width=100% align="center" size=5 noshade="noshade" color="#00" />
-
-               <div class="py-2 txtCenter">
-                    <h1>
-                         Historia Clínica
-                    </h1>
-
-                    <h4>
-                         {{ day }} de {{ month }} del {{ year }} - {{ hour }}
-                    </h4>
-               </div>
-
+               <p v-else ></p>
           </template>
 
           <template v-slot:content>
-               <PersonalInformation/>
+               
+               <div class="row" :style="{height: idx===0 ? '19cm' : '26cm' }" >
+                    <div class="column" v-for="obj in array" >
+                         <Square 
+                              :title="obj.title" 
+                              :arrayContent="obj.data"
+                              :lista="obj?.parts != null"
+                              :part="obj?.parts ? obj?.part : null"
+                              :parts="obj?.parts"
+                         />
+                    </div>
+               </div>
+
           </template>
           
      </Page>
+
 </template>
 
 
 <style scoped>
-     .header {
-          margin-block: 1rem;
-          padding-block: 0.5rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          max-height: 6rem;
-     }
+    
+     .column{
+        width: 50%;
+    }
 
-     h1,
-     h2,
-     h4 {
-          margin-block: 0.5rem;
-     }
+    .row{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
 
-     .py-2 {
-          padding-block: 1.3rem;
-     }
-
-     .txtCenter {
-          text-align: center;
-     }
 </style>
 

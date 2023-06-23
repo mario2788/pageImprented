@@ -3,10 +3,15 @@
 <script setup>
 
     const props = defineProps(
-        ['title', 'arrayContent', 'lista']
+        ['title', 'arrayContent', 'lista', 'part', 'parts']
     )
 
-    console.log( props );
+    let numerador = ''
+
+    if(props.parts != null & props.parts != 1){
+        numerador = `${props.part} de ${props.parts}`
+    }
+
 </script>
 
 
@@ -18,23 +23,17 @@
             <i>
                 {{ title }}
             </i>
+            <i class="parts">
+                {{ numerador }}
+            </i>
         </p>
         
         <div class="box">
 
             <p v-if="lista" v-for="item in arrayContent">
-                <b class="label">
-                    {{ item.label }}
-                </b>
-                <span>
-                    {{ item.field }}
-                </span>
-            </p>
-
-            <p v-else v-for="item in arrayContent">
                 <li>
                     <b class="label">
-                    {{ item.label }}
+                    {{ item.label }} :
                     </b>
                     <span>
                         {{ item.field }}
@@ -42,7 +41,7 @@
                 </li>
                 <p class="element">
                     <b class="label">
-                    {{ item.label2 }}
+                    {{ item.label2 }} :
                     </b>
                     <span>
                         {{ item.field2 }}
@@ -50,15 +49,24 @@
                 </p>
                 <p class="element"> 
                     <b class="label">
-                    {{ item.label3 }}
+                    {{ item.label3 }} :
                     </b>
                     <span>
                         {{ item.field3 }}
                     </span>
                 </p>
             </p>
-        </div>
 
+            <p v-else v-for="item in arrayContent">
+                <b class="label">
+                    {{ item.label }} :
+                </b>
+                <span>
+                    {{ item.field }}
+                </span>
+            </p>
+
+        </div>
     </div>
 
 </template>
@@ -67,7 +75,7 @@
 <style scoped>
 
     p{
-        margin-block: 0.5rem;
+        margin-block: 0.4rem;
     }
 
     li{
@@ -75,12 +83,18 @@
     }
 
     .container{
-        padding-inline: 1rem;
+        padding-inline: 0.6rem;
     }
 
     .title{
-        font-size: 1rem;
+        margin-top: 0.2rem;
+        font-size: 1.3rem;
         font-weight: 500;
+    }
+
+    .parts{
+        margin-left: 1rem;
+        font-size: 0.8rem;
     }
 
     .label{
@@ -92,7 +106,8 @@
         box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.6);
         border-radius: 7px;
         padding-left: 1rem;
-        padding-block: 1rem;
+        padding-block: 0.5rem;
+        margin-bottom: 0.5rem;
         /* width: 100%; */
     }
 
